@@ -1,4 +1,5 @@
-let humanScore = 0 , computerScore = 0;
+
+let userScore = 0 , computerScore = 0 , round = 1;
 function getComputerChoice()
 {
     const choice = (Math.random() * 2).toFixed(0) ;
@@ -9,13 +10,6 @@ function getComputerChoice()
     else if(choice == 1)
         return 'paper';
     return 'scissors';
-}
-
-function getHumanChoice()
-{
-    const choice = prompt('Enter rock / paper / scissors ');
-
-    return choice.toLowerCase();
 }
 
 function PlayRound(ComputerChoice , HumanChoice)
@@ -34,44 +28,47 @@ function PlayRound(ComputerChoice , HumanChoice)
 function determineTheWinner(Result)
 {
     if(Result === 'human')
-        humanScore++;
+        userScore++;
     else if(Result === 'computer')
         computerScore++;
 }
 
-function playGame()
+function playGame(userChoice)
 {
-    let round = 1;
+    determineTheWinner(PlayRound(getComputerChoice() , userChoice));
 
-    console.log("round " + round + "............./n");   
-    determineTheWinner(PlayRound(getComputerChoice() , getHumanChoice()));
+    const currentRound = document.querySelector('.round');
+    currentRound.textContent = "Round : " + round;
+
+    const scoreResult = document.querySelector('.score');
+    scoreResult.textContent = "Your score : " + userScore + " Computer Score : " + computerScore;
+
     round++;
-
-    console.log("round " + round + "............./n");   
-    determineTheWinner(PlayRound(getComputerChoice() , getHumanChoice()));
-    round++;
-
-    console.log("round " + round + "............./n");   
-    determineTheWinner(PlayRound(getComputerChoice() , getHumanChoice()));
-    round++;
-
-    console.log("round " + round + "............./n");   
-    determineTheWinner(PlayRound(getComputerChoice() , getHumanChoice()));
-    round++;
-
-    console.log("round " + round + "............./n");   
-    determineTheWinner(PlayRound(getComputerChoice() , getHumanChoice()));
-    round++;
-
-    if(humanScore > computerScore)
-        console.log("You Win");
-    else if(computerScore > humanScore)
-        console.log("You Lose");
-    else
-        console.log("Tie");
-
-
     
+    if(userScore == 5)
+    {
+        const resultDiv = document.querySelector('.result');
+        const theWinner = document.createElement('div');
+
+        theWinner.textContent = "You Win! reload the page to restart the game!";
+        resultDiv.append(theWinner);
+    }
+    if(computerScore == 5)
+    {
+        const resultDiv = document.querySelector('.result');
+        const theWinner = document.createElement('div');
+
+        theWinner.textContent = "You Lose): reload the page to restart the game!";
+        resultDiv.append(theWinner);
+    }
 }
 
-playGame();
+
+
+const btn = document.querySelector('.user');
+
+btn.addEventListener("click" , (e) =>{
+    playGame(e.target.id);
+    if(userScore == 5 || computerScore == 5)
+        
+});
