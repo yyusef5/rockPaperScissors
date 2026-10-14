@@ -69,6 +69,5 @@ const btn = document.querySelector('.user');
 
 btn.addEventListener("click" , (e) =>{
     playGame(e.target.id);
-    if(userScore == 5 || computerScore == 5)
         
 });
